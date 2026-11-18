@@ -25,6 +25,27 @@ if (!app.Environment.IsDevelopment())
 
 app.UseRouting();
 app.UseSession();
+
+app.Use(async (context, next) =>
+{
+    var path = context.Request.Path.Value?.ToLower() ?? "";
+    var role = context.Session.GetString("Role");
+
+    bool blocked =
+        (path.StartsWith("/admin") && role != "Admin") ||
+        (path.StartsWith("/staff") && role != "Staff" && role != "Admin") ||
+        (path.StartsWith("/customer") && role != "Customer");
+
+    if (blocked)
+    {
+        // Not logged in → login page. Logged in but wrong role → access denied.
+        context.Response.Redirect(role == null ? "/Account/Login" : "/Account/AccessDenied");
+        return;
+    }
+
+    await next();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
