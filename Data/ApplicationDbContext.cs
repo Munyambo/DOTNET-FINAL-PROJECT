@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Restaurant_Management_System.Models;
 
 namespace Restaurant_Management_System.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
            : base(options) { }
@@ -16,6 +15,7 @@ namespace Restaurant_Management_System.Data
         public DbSet<MenuItem> MenuItems => Set<MenuItem>();
         public DbSet<Order> Orders => Set<Order>();
         public DbSet<OrderItem> OrderItems => Set<OrderItem>();
+        public DbSet<UsersR> UsersR => Set<UsersR>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

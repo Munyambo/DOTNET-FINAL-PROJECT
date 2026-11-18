@@ -4,6 +4,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<NuGetAuditLevel>moderate</NuGetAuditLevel>
+    <UserSecretsId>e3501947-8cd7-4d33-81f4-85aa0bce86cb</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
