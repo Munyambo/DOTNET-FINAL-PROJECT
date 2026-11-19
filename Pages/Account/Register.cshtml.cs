@@ -68,6 +68,7 @@ namespace Restaurant_Management_System.Pages.Account
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("Email", user.Email);
             HttpContext.Session.SetString("Role", user.Role);
+            HttpContext.Session.SetString("Name", FullName);
 
             return RedirectToPage("/Index");
         }

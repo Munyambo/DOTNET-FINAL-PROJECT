@@ -36,6 +36,21 @@ namespace Restaurant_Management_System.Accounts
             HttpContext.Session.SetString("Email", user.Email);
             HttpContext.Session.SetString("Role", user.Role);
 
+
+            // Find the person's name: customers and staff have a FullName, the admin doesn't
+            string name = "Admin";
+            if (user.Role == "Customer")
+            {
+                name = await _db.Customers.Where(c => c.UserId == user.Id)
+                                          .Select(c => c.FullName).FirstOrDefaultAsync() ?? "Customer";
+            }
+            else if (user.Role == "Staff")
+            {
+                name = await _db.Staffs.Where(s => s.UserId == user.Id)
+                                       .Select(s => s.FullName).FirstOrDefaultAsync() ?? "Staff";
+            }
+            HttpContext.Session.SetString("Name", name);
+
             return RedirectToPage("/Index");
         }
 
