@@ -1,0 +1,53 @@
+﻿@page
+@model Restaurant_Management_System.Pages.StaffArea.Orders.IndexModel
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<h1>Orders</h1>
+
+@if (!Model.Orders.Any())
+{
+    <p>There are no orders to show.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Date</th>
+                <th>Customer</th>
+                @if (Model.IsAdmin)
+                {
+                    <th>Branch</th>
+                }
+                <th>Total</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Orders)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.OrderDate.ToString("dd MMM yyyy HH:mm")</td>
+                    <td>@item.Customer?.FullName</td>
+                    @if (Model.IsAdmin)
+                    {
+                        <td>@item.Branch?.Name</td>
+                    }
+                    <td>@item.TotalAmount.ToString("N0")</td>
+                    <td>
+                        <span class="badge @Model.GetBadgeClass(item.Status)">@item.Status</span>
+                    </td>
+					<td>
+						<a asp-page="/StaffArea/Orders/Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
