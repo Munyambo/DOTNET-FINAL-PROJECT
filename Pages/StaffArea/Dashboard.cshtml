@@ -1,0 +1,38 @@
+﻿@page
+@model Restaurant_Management_System.Pages.StaffArea.DashboardModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1>Dashboard</h1>
+<p class="text-muted">@Model.Scope</p>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="card-subtitle text-muted">Total Orders</h6>
+                <h2 class="card-title">@Model.TotalOrders</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="card-subtitle text-muted">Pending Orders</h6>
+                <h2 class="card-title">@Model.PendingOrders</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="card-subtitle text-muted">Total Sales (Completed orders)</h6>
+                <h2 class="card-title">@Model.TotalSales.ToString("N0")</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a asp-page="./Orders/Index" class="btn btn-primary">View Orders</a>
