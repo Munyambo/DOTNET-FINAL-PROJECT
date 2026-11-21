@@ -30,6 +30,11 @@ namespace Restaurant_Management_System.Accounts
                 ErrorMessage = "Wrong email or password.";
                 return Page();
             }
+            if (!user.IsActive)
+            {
+                ErrorMessage = "Your account has been deactivated. Please contact the restaurant.";
+                return Page();
+            }
 
             // 3. Remember them in the Session
             HttpContext.Session.SetInt32("UserId", user.Id);

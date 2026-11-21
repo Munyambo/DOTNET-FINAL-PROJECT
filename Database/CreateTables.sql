@@ -2,7 +2,8 @@
     Id INT NOT NULL PRIMARY KEY IDENTITY,
     Email NVARCHAR(150) NOT NULL UNIQUE,
     PasswordHash NVARCHAR(200) NOT NULL,
-    Role NVARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Staff', 'Customer'))
+    Role NVARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Staff', 'Customer')),
+    IsActive BIT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE Branches (
