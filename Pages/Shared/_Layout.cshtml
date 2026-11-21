@@ -28,9 +28,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Our Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Restaurants">Restaurant</a>
-                        </li>
+
                         @if (Context.Session.GetString("Role") == "Admin")
                         {
                             <li class="nav-item">
@@ -43,8 +41,21 @@
                         @if (Context.Session.GetString("Email") != null)
                         {
                             <li class="nav-item">
-                                <span class="nav-link text-dark">Welcome, @Context.Session.GetString("Name") (@Context.Session.GetString("Role"))</span>
+                                @if (Context.Session.GetString("Role") == "Customer")
+                                {
+                                    <a class="nav-link text-dark" asp-page="/CustomerArea/Profile">Welcome, @Context.Session.GetString("Name") (@Context.Session.GetString("Role"))</a>
+                                }
+                                else
+                                {
+                                    <span class="nav-link text-dark">Welcome, @Context.Session.GetString("Name") (@Context.Session.GetString("Role"))</span>
+                                }
                             </li>
+                            @if (Context.Session.GetString("Role") == "Customer")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/CustomerArea/Profile">My Profile</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <form method="post" asp-page="/Account/Logout">
                                     <button type="submit" class="btn btn-link nav-link text-dark">Logout</button>
