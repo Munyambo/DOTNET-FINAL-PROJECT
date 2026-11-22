@@ -2,13 +2,12 @@
 @model Restaurant_Management_System.Pages.BranchPages.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Branch Details";
 }
-
-<h1>Details</h1>
+<h1>Branch Details</h1>
 
 <div>
-    <h4>Branch</h4>
+    
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -32,6 +31,6 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Branch.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <<a asp-page="./Edit" asp-route-id="@Model.Branch.Id" class="btn btn-success">Edit</a> |
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </div>

@@ -19,19 +19,45 @@
             <th>Full Name</th>
             <th>Phone</th>
             <th>Address</th>
+            <th>Status</th>  
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Customer)
         {
+            
+            var active = item.UserId != null
+                         && Model.ActiveByUser.TryGetValue(item.UserId.Value, out var isActive)
+                         && isActive;
+
             <tr>
                 <td>@item.FullName</td>
                 <td>@item.Phone</td>
                 <td>@item.Address</td>
+
+               
+                <td>
+                    @if (active)
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Deactivated</span>
+                    }
+                </td>
+
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm">Edit</a>
                     <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Details</a>
+
+                    
+                    <form method="post" asp-page-handler="ToggleActive" asp-route-id="@item.Id" class="d-inline">
+                        <button type="submit" class="btn btn-sm @(active ? "btn-danger" : "btn-warning")">
+                            @(active ? "Deactivate" : "Activate")
+                        </button>
+                    </form>
                 </td>
             </tr>
         }

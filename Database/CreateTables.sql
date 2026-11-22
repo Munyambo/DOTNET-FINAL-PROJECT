@@ -23,7 +23,7 @@ CREATE TABLE Customers (
     FullName NVARCHAR(100) NOT NULL,
     Phone NVARCHAR(20) NULL,
     Address NVARCHAR(200) NULL,
-    UserId INT NULL
+    UserId INT NULL FOREIGN KEY REFERENCES UsersR(Id)
 );
 
 CREATE TABLE Staffs (
@@ -33,7 +33,7 @@ CREATE TABLE Staffs (
     Position NVARCHAR(50) NULL,
     IsManager BIT NOT NULL DEFAULT 0,
     BranchId INT NOT NULL FOREIGN KEY REFERENCES Branches(Id),
-    UserId INT NULL
+    UserId INT NULL FOREIGN KEY REFERENCES UsersR(Id)
 );
 
 CREATE TABLE MenuItems (

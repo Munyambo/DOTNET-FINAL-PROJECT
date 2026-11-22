@@ -48,18 +48,22 @@ public class DeleteModel : PageModel
         var staff = await _context.Staffs.FindAsync(id);
         if (staff != null)
         {
-            // Remove the login too, so this person can no longer sign in
-            if (staff.UserId != null)
+            var userId = staff.UserId;          // remember the login's Id before deleting
+
+            //  Delete the staff profile first (it points to the login)
+            _context.Staffs.Remove(staff);
+            await _context.SaveChangesAsync();
+
+            //  Delete the login, so this person can no longer sign in
+            if (userId != null)
             {
-                var user = await _context.UsersR.FindAsync(staff.UserId.Value);
+                var user = await _context.UsersR.FindAsync(userId.Value);
                 if (user != null)
                 {
                     _context.UsersR.Remove(user);
+                    await _context.SaveChangesAsync();
                 }
             }
-
-            _context.Staffs.Remove(staff);
-            await _context.SaveChangesAsync();
         }
 
         return RedirectToPage("./Index");
