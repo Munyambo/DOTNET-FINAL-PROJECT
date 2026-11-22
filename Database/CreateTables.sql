@@ -2,7 +2,8 @@
     Id INT NOT NULL PRIMARY KEY IDENTITY,
     Email NVARCHAR(150) NOT NULL UNIQUE,
     PasswordHash NVARCHAR(200) NOT NULL,
-    Role NVARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Staff', 'Customer'))
+    Role NVARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Staff', 'Customer')),
+    IsActive BIT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE Branches (
@@ -22,7 +23,7 @@ CREATE TABLE Customers (
     FullName NVARCHAR(100) NOT NULL,
     Phone NVARCHAR(20) NULL,
     Address NVARCHAR(200) NULL,
-    UserId INT NULL
+    UserId INT NULL FOREIGN KEY REFERENCES UsersR(Id)
 );
 
 CREATE TABLE Staffs (
@@ -32,7 +33,7 @@ CREATE TABLE Staffs (
     Position NVARCHAR(50) NULL,
     IsManager BIT NOT NULL DEFAULT 0,
     BranchId INT NOT NULL FOREIGN KEY REFERENCES Branches(Id),
-    UserId INT NULL
+    UserId INT NULL FOREIGN KEY REFERENCES UsersR(Id)
 );
 
 CREATE TABLE MenuItems (

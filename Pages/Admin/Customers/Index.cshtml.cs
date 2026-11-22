@@ -20,6 +20,9 @@ public class IndexModel : PageModel
     [BindProperty(SupportsGet = true)]
     public string? SearchName { get; set; }
 
+ 
+    public Dictionary<int, bool> ActiveByUser { get; set; } = new();
+
     public async Task OnGetAsync()
     {
         var query = _context.Customers.AsQueryable();
@@ -30,5 +33,25 @@ public class IndexModel : PageModel
         }
 
         Customer = await query.ToListAsync();
+
+        
+        var userIds = Customer.Where(c => c.UserId != null).Select(c => c.UserId!.Value).ToList();
+        ActiveByUser = await _context.UsersR
+            .Where(u => userIds.Contains(u.Id))
+            .ToDictionaryAsync(u => u.Id, u => u.IsActive);
+    }
+
+    
+    public async Task<IActionResult> OnPostToggleActiveAsync(int id)
+    {
+        var customer = await _context.Customers.FindAsync(id);
+        if (customer?.UserId == null) return NotFound();
+
+        var user = await _context.UsersR.FindAsync(customer.UserId.Value);
+        if (user == null) return NotFound();
+
+        user.IsActive = !user.IsActive;     
+        await _context.SaveChangesAsync();
+        return RedirectToPage();
     }
 }
