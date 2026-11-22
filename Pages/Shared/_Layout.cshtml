@@ -51,6 +51,24 @@
                                 </form>
                             </li>
                         }
+                        @if (Context.Session.GetString("Role") == "Customer")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/CustomerArea/Orders/Index">My Orders</a>
+                            </li>
+                        }
+                        @if (Context.Session.GetString("Role") == "Staff" || Context.Session.GetString("Role") == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/StaffArea/Dashboard">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/StaffArea/Orders/Index">Orders</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/StaffArea/Reports">Reports</a>
+                            </li>
+                        }
                         else
                         {
                             <li class="nav-item">
