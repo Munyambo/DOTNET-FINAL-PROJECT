@@ -12,24 +12,24 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <span class="text-danger">*</span>
                 <label asp-for="MenuItem.Name" class="control-label"></label>
                 <input asp-for="MenuItem.Name" class="form-control" aria-required="true" />
                 <span asp-validation-for="MenuItem.Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <span class="text-danger">*</span>
                 <label asp-for="MenuItem.Price" class="control-label"></label>
                 <input asp-for="MenuItem.Price" class="form-control" aria-required="true" />
                 <span asp-validation-for="MenuItem.Price" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="MenuItem.Description" class="control-label"></label>
                 <textarea asp-for="MenuItem.Description" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="MenuItem.Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <span class="text-danger">*</span>
                 <label asp-for="MenuItem.CategoryId" class="control-label"></label>
                 <select asp-for="MenuItem.CategoryId" asp-items="Model.Categories" class="form-control">
@@ -37,19 +37,18 @@
                 </select>
                 <span asp-validation-for="MenuItem.CategoryId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="MenuItem.IsAvailable" class="control-label"></label>
                 <input asp-for="MenuItem.IsAvailable" class="form-check-input" />
                 <span asp-validation-for="MenuItem.IsAvailable" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-<br />
-<div>
+<div class="mt-4">
     <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </div>
 
