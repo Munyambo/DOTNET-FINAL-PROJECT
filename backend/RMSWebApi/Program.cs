@@ -11,9 +11,8 @@ builder.Services.AddDbContext<ApiContext>(options =>
 // Controllers ( our API Endpoints)
 builder.Services.AddControllers();
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// 3. OpenAPI description of the API (used by the Swagger page)
+builder.Services.AddOpenApi();
 
 builder.Services.AddCors(options =>
 {
@@ -28,8 +27,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "RMS API"));
 }
 
 app.UseCors("AllowReact");
@@ -37,6 +36,5 @@ app.UseCors("AllowReact");
 app.UseAuthorization();
 
 app.MapControllers();
-
 
 app.Run();
