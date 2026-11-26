@@ -1,0 +1,44 @@
+@page
+@model Restaurant_Management_System.Pages.BranchPages.CreateModel
+
+@{
+     ViewData["Title"] = "New Branch";
+}
+
+<h1>New Branch</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <span class="text-danger">*</span>
+                <label asp-for="Branch.Name" class="control-label"></label>
+                <input asp-for="Branch.Name" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Branch.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Branch.Address" class="control-label"></label>
+                <input asp-for="Branch.Address" class="form-control" />
+                <span asp-validation-for="Branch.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Branch.Phone" class="control-label"></label>
+                <input asp-for="Branch.Phone" class="form-control" />
+                <span asp-validation-for="Branch.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
