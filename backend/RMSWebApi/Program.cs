@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RMSWebApi.Data;
 using RMSWebApi.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +10,13 @@ builder.Services.AddDbContext<ApiContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Controllers ( our API Endpoints)
-builder.Services.AddControllers();
+// Numbers are only numbers (fixes "integer | string" in Swagger)
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.Strict);
 
+builder.Services.ConfigureHttpJsonOptions(options =>
+    options.SerializerOptions.NumberHandling = JsonNumberHandling.Strict);
 // 3. OpenAPI description of the API (used by the Swagger page)
 builder.Services.AddOpenApi();
 
