@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RMSWebApi.Data;
 using RMSWebApi.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RMSWebApi.Controllers
 {
@@ -17,14 +18,17 @@ namespace RMSWebApi.Controllers
 
         //CREATE
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(Branch branch)
         {
+            branch.Id = 0;
             _context.Branches.Add(branch);
             _context.SaveChanges();
             return Ok(branch);
         }
 
         //VIEW ALL
+       
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -33,6 +37,7 @@ namespace RMSWebApi.Controllers
         }
 
         //VIEW ONE
+        
         [HttpGet("{id:int}")]
         public IActionResult Get(int id)
         {
@@ -45,6 +50,7 @@ namespace RMSWebApi.Controllers
         }
 
         //UPDATE
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public IActionResult Update(Branch branch)
         {
@@ -54,6 +60,7 @@ namespace RMSWebApi.Controllers
         }
 
         //DELETE
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
