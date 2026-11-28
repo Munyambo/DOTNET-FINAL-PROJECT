@@ -25,12 +25,14 @@ namespace RMSWebApi.Controllers
             return Convert.ToHexString(bytes);
         }
 
+        // READ ALL
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_context.Staffs.Include(s => s.Branch).ToList());
+            return Ok(_context.Staffs.Include(staff => staff.Branch).ToList());
         }
 
+        // READ ONE 
         [HttpGet("{id:int}")]
         public IActionResult Get(int id)
         {
@@ -39,14 +41,15 @@ namespace RMSWebApi.Controllers
             return Ok(staff);
         }
 
+        // CREATE
         [HttpPost]
         public IActionResult Create(StaffRequest request)
         {
-            // 1. Is the email already used?
+            
             if (_context.UsersR.Any(user => user.Email == request.Email))
                 return BadRequest("This email is already used.");
 
-            // 2. Create the login with role Staff
+            // create the login with role Staff
             var user = new UsersR
             {
                 Email = request.Email,
@@ -55,9 +58,9 @@ namespace RMSWebApi.Controllers
                 IsActive = true
             };
             _context.UsersR.Add(user);
-            _context.SaveChanges(); // now user.Id has a value
+            _context.SaveChanges(); 
 
-            // 3. Create the staff details, linked to that login
+            // create the staff details, linked to that login
             var staff = new Staff
             {
                 FullName = request.FullName,
@@ -73,6 +76,7 @@ namespace RMSWebApi.Controllers
             return Ok(staff);
         }
 
+        // UPDATE
         [HttpPut]
         public IActionResult Update(Staff staff)
         {
@@ -81,16 +85,17 @@ namespace RMSWebApi.Controllers
             return Ok(staff);
         }
 
+        // DELETE
         [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
             var staff = _context.Staffs.Find(id);
             if (staff == null) return NotFound();
 
-            // 1. Delete the staff first (it points to the login)
+            // delete the staff first (it points to the login)
             _context.Staffs.Remove(staff);
 
-            // 2. Then delete their login
+            // delete their login
             var user = _context.UsersR.Find(staff.UserId);
             if (user != null) _context.UsersR.Remove(user);
 
